@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Cookie Monitor",
+  "version": "1.0",
+  "description": "Monitor specific cookie changes and store them in database",
+  "permissions": [
+    "cookies",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  }
+}
