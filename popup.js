@@ -1,7 +1,7 @@
 // DOM elements
-const currentCookieElement = document.getElementById('currentCookie');
-const lastUpdateElement = document.getElementById('lastUpdate');
-const refreshButton = document.getElementById('refreshButton');
+let currentCookieElement;
+let lastUpdateElement;
+let refreshButton;
 
 // Function to format date
 function formatDate(date) {
@@ -19,6 +19,11 @@ function truncateCookieValue(value) {
 async function updateUI() {
   try {
     console.log('Starting UI update...');
+    console.log('DOM Elements status:', {
+      currentCookieElement: currentCookieElement ? 'exists' : 'null',
+      lastUpdateElement: lastUpdateElement ? 'exists' : 'null',
+      refreshButton: refreshButton ? 'exists' : 'null'
+    });
     
     // Get current cookie
     const cookie = await chrome.cookies.get({
@@ -32,10 +37,20 @@ async function updateUI() {
     if (cookie) {
       const truncatedValue = truncateCookieValue(cookie.value);
       console.log('Setting cookie display to:', truncatedValue);
-      currentCookieElement.textContent = truncatedValue;
+      if (currentCookieElement) {
+        currentCookieElement.textContent = truncatedValue;
+        console.log('Cookie element updated successfully');
+      } else {
+        console.error('currentCookieElement is null when trying to update');
+      }
     } else {
       console.log('No cookie found');
-      currentCookieElement.textContent = 'No cookie found';
+      if (currentCookieElement) {
+        currentCookieElement.textContent = 'No cookie found';
+        console.log('Cookie element updated to "No cookie found"');
+      } else {
+        console.error('currentCookieElement is null when trying to update');
+      }
     }
 
     // Get last update from background script
@@ -44,22 +59,42 @@ async function updateUI() {
       if (response && response.lastUpdate) {
         const formattedDate = formatDate(response.lastUpdate);
         console.log('Setting last update to:', formattedDate);
-        lastUpdateElement.textContent = formattedDate;
+        if (lastUpdateElement) {
+          lastUpdateElement.textContent = formattedDate;
+          console.log('Last update element updated successfully');
+        } else {
+          console.error('lastUpdateElement is null when trying to update');
+        }
       } else {
         console.log('No last update available');
-        lastUpdateElement.textContent = 'No updates yet';
+        if (lastUpdateElement) {
+          lastUpdateElement.textContent = 'No updates yet';
+          console.log('Last update element updated to "No updates yet"');
+        } else {
+          console.error('lastUpdateElement is null when trying to update');
+        }
       }
     });
 
   } catch (error) {
     console.error('Error updating UI:', error);
-    currentCookieElement.textContent = 'Error loading cookie';
-    lastUpdateElement.textContent = 'Error loading last update';
+    if (currentCookieElement) {
+      currentCookieElement.textContent = 'Error loading cookie';
+    }
+    if (lastUpdateElement) {
+      lastUpdateElement.textContent = 'Error loading last update';
+    }
   }
 }
 
 // Function to handle manual refresh
 async function handleRefresh() {
+  console.log('Refresh button clicked');
+  if (!refreshButton) {
+    console.error('Refresh button element is null');
+    return;
+  }
+
   refreshButton.classList.add('loading');
   refreshButton.disabled = true;
 
@@ -72,14 +107,38 @@ async function handleRefresh() {
   } catch (error) {
     console.error('Error refreshing:', error);
   } finally {
-    refreshButton.classList.remove('loading');
-    refreshButton.disabled = false;
+    if (refreshButton) {
+      refreshButton.classList.remove('loading');
+      refreshButton.disabled = false;
+    }
   }
 }
 
-// Event listeners
-refreshButton.addEventListener('click', handleRefresh);
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM Content Loaded event fired');
+  
+  // Get DOM elements
+  currentCookieElement = document.getElementById('currentCookie');
+  lastUpdateElement = document.getElementById('lastUpdate');
+  refreshButton = document.getElementById('refreshButton');
 
-// Initial UI update
-console.log('Popup script loaded');
-updateUI(); 
+  console.log('DOM Elements after initialization:', {
+    currentCookieElement: currentCookieElement ? 'exists' : 'null',
+    lastUpdateElement: lastUpdateElement ? 'exists' : 'null',
+    refreshButton: refreshButton ? 'exists' : 'null'
+  });
+
+  if (!currentCookieElement || !lastUpdateElement || !refreshButton) {
+    console.error('Failed to initialize one or more DOM elements');
+    return;
+  }
+
+  // Add event listeners
+  refreshButton.addEventListener('click', handleRefresh);
+  console.log('Event listeners attached');
+
+  // Initial UI update
+  console.log('Starting initial UI update');
+  updateUI();
+}); 

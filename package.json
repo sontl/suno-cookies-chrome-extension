@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run generate-icons && tsc && vite build && npm run copy-files",
-    "copy-files": "cp manifest.json dist/ && cp -r icons dist/ && cp popup.html dist/ && cp popup.css dist/",
+    "copy-files": "cp manifest.json dist/ && cp -r icons dist/ && cp popup.html dist/ && cp popup.css dist/ && cp popup.js dist/",
     "generate-icons": "node scripts/generate-icons.js",
     "preview": "vite preview"
   },
