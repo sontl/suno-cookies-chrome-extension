@@ -5,12 +5,16 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
+        popup: resolve(__dirname, 'popup.html'),
         background: resolve(__dirname, 'background.js')
       },
       output: {
         entryFileNames: '[name].js',
-        format: 'es'
+        chunkFileNames: '[name].js',
+        assetFileNames: '[name].[ext]'
       }
-    }
+    },
+    outDir: 'dist',
+    emptyOutDir: true
   }
 });

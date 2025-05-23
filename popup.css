@@ -1,0 +1,105 @@
+body {
+  width: 400px;
+  margin: 0;
+  padding: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin: 0 0 20px 0;
+  font-size: 24px;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+h2 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #666;
+}
+
+.card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.value-container {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 12px;
+  word-break: break-all;
+  font-size: 14px;
+  line-height: 1.4;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 14px;
+  color: #333;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.refresh-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007AFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.refresh-button:hover {
+  background-color: #0056b3;
+}
+
+.refresh-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.spinner {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  margin-left: 8px;
+  animation: spin 1s linear infinite;
+}
+
+.refresh-button.loading .spinner {
+  display: inline-block;
+}
+
+.refresh-button.loading .button-text {
+  display: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+} 

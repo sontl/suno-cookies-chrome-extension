@@ -5,13 +5,29 @@
   "description": "Monitor specific cookie changes and store them in database",
   "permissions": [
     "cookies",
-    "storage"
+    "storage",
+    "alarms"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "https://suno.com/*",
+    "https://*.suno.com/*",
+    "https://feoubelqhhnjthsdwtqi.supabase.co/*"
   ],
   "background": {
     "service_worker": "background.js",
     "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   }
 }
